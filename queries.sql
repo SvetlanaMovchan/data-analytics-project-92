@@ -9,7 +9,7 @@ FROM customers
 SELECT
     CONCAT(e.first_name, ' ', e.last_name) AS seller,
     COUNT(s.product_id) AS operations,
-    SUM(FLOOR(s.quantity * p.price)) AS income
+    FLOOR(SUM(s.quantity * p.price)) AS income
 FROM sales AS s
 LEFT JOIN employees AS e
     ON s.sales_person_id = e.employee_id
@@ -48,7 +48,7 @@ WITH sales_summary AS (
     SELECT
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
         EXTRACT(ISODOW FROM s.sale_date) AS number_of_week,
-        SUM(FLOOR(s.quantity * p.price)) AS income
+        FLOOR(SUM(s.quantity * p.price)) AS income
     FROM sales AS s
     LEFT JOIN employees AS e
         ON s.sales_person_id = e.employee_id
