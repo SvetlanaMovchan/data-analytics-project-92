@@ -61,13 +61,13 @@ WITH sales_summary AS (
 SELECT
     seller,
     CASE
-        WHEN number_of_week = 1 THEN 'monday   '
-        WHEN number_of_week = 2 THEN 'tuesday   '
-        WHEN number_of_week = 3 THEN 'wednesday   '
-        WHEN number_of_week = 4 THEN 'thursday   '
-        WHEN number_of_week = 5 THEN 'friday   '
-        WHEN number_of_week = 6 THEN 'saturday   '
-        ELSE 'sunday   '
+        WHEN number_of_week = 1 THEN 'monday'
+        WHEN number_of_week = 2 THEN 'tuesday'
+        WHEN number_of_week = 3 THEN 'wednesday'
+        WHEN number_of_week = 4 THEN 'thursday'
+        WHEN number_of_week = 5 THEN 'friday'
+        WHEN number_of_week = 6 THEN 'saturday'
+        ELSE 'sunday'
     END AS day_of_week,
     income
 FROM sales_summary
