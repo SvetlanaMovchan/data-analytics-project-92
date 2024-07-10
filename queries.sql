@@ -1,7 +1,7 @@
 --Общее количество покупателей
 
 SELECT COUNT(customer_id) AS customers_count
-FROM customers
+FROM customers;
 
 
 --Топ 10 продавцов за все время
@@ -17,7 +17,7 @@ LEFT JOIN products AS p
     ON s.product_id = p.product_id
 GROUP BY 1
 ORDER BY income DESC
-LIMIT 10
+LIMIT 10;
 
 
 --Продавцы, чья средняя выручка за сделку ниже 
@@ -40,7 +40,7 @@ HAVING
         LEFT JOIN products AS p
             ON s.product_id = p.product_id
     )
-ORDER BY average_income
+ORDER BY average_income;
 
 
 --Выручка по продавцам и по дням недели
@@ -71,7 +71,7 @@ SELECT
         ELSE 'sunday'
     END AS day_of_week,
     income
-FROM sales_summary
+FROM sales_summary;
 
 
 --Возрастные группы покупателей
@@ -85,7 +85,7 @@ SELECT
     COUNT(customer_id) AS age_count
 FROM customers
 GROUP BY age_category
-ORDER BY age_category
+ORDER BY age_category;
 
 
 ---Количество покупателей и выручка по месяцам
@@ -98,7 +98,7 @@ FROM sales AS s
 LEFT JOIN products AS p
     ON s.product_id = p.product_id
 GROUP BY 1
-ORDER BY selling_month
+ORDER BY selling_month;
 
 
 --Покупатели, чья первая покупка пришлась на время 
@@ -129,4 +129,4 @@ SELECT
     sale_date,
     seller
 FROM sales_data
-WHERE row = 1 AND price = 0
+WHERE row = 1 AND price = 0;
