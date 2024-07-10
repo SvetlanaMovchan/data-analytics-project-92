@@ -113,7 +113,7 @@ WITH sales_data AS (
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
         ROW_NUMBER()
             OVER (PARTITION BY s.customer_id ORDER BY s.sale_date)
-            AS row
+        AS row_n
     FROM sales AS s
     LEFT JOIN products AS p
         ON s.product_id = p.product_id
@@ -129,4 +129,4 @@ SELECT
     sale_date,
     seller
 FROM sales_data
-WHERE row = 1 AND price = 0;
+WHERE row_n = 1 AND price = 0;
