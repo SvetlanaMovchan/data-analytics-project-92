@@ -16,7 +16,7 @@ LEFT JOIN employees AS e
 LEFT JOIN products AS p
     ON s.product_id = p.product_id
 GROUP BY 1
-ORDER BY income DESC
+ORDER BY 1 DESC
 LIMIT 10;
 
 
@@ -40,7 +40,7 @@ HAVING
         LEFT JOIN products AS p
             ON s.product_id = p.product_id
     )
-ORDER BY average_income;
+ORDER BY 2;
 
 
 --Выручка по продавцам и по дням недели
@@ -48,7 +48,7 @@ ORDER BY average_income;
 WITH sales_summary AS (
     SELECT
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
-        EXTRACT(ISODOW FROM s.sale_date) AS number_of_week,
+        EXTRACT(isodow FROM s.sale_date) AS number_of_week,
         FLOOR(SUM(s.quantity * p.price)) AS income
     FROM sales AS s
     LEFT JOIN employees AS e
@@ -56,11 +56,12 @@ WITH sales_summary AS (
     LEFT JOIN products AS p
         ON s.product_id = p.product_id
     GROUP BY 1, 2
-    ORDER BY number_of_week, seller
+    ORDER BY 2, 1
 )
 
 SELECT
     seller,
+    income,
     CASE
         WHEN number_of_week = 1 THEN 'monday'
         WHEN number_of_week = 2 THEN 'tuesday'
@@ -69,8 +70,7 @@ SELECT
         WHEN number_of_week = 5 THEN 'friday'
         WHEN number_of_week = 6 THEN 'saturday'
         ELSE 'sunday'
-    END AS day_of_week,
-    income
+    END AS day_of_week
 FROM sales_summary;
 
 
@@ -84,8 +84,8 @@ SELECT
     END AS age_category,
     COUNT(customer_id) AS age_count
 FROM customers
-GROUP BY age_category
-ORDER BY age_category;
+GROUP BY 1
+ORDER BY 1;
 
 
 ---Количество покупателей и выручка по месяцам
@@ -98,7 +98,7 @@ FROM sales AS s
 LEFT JOIN products AS p
     ON s.product_id = p.product_id
 GROUP BY 1
-ORDER BY selling_month;
+ORDER BY 1;
 
 
 --Покупатели, чья первая покупка пришлась на время 
@@ -113,7 +113,7 @@ WITH sales_data AS (
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
         ROW_NUMBER()
             OVER (PARTITION BY s.customer_id ORDER BY s.sale_date)
-        AS row
+            AS row
     FROM sales AS s
     LEFT JOIN products AS p
         ON s.product_id = p.product_id
