@@ -48,7 +48,7 @@ ORDER BY 2;
 WITH sales_summary AS (
     SELECT
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
-        EXTRACT(isodow FROM s.sale_date) AS number_of_week,
+        EXTRACT(ISODOW FROM s.sale_date) AS number_of_week,
         FLOOR(SUM(s.quantity * p.price)) AS income
     FROM sales AS s
     LEFT JOIN employees AS e
