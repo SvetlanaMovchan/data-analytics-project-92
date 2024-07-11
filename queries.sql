@@ -106,10 +106,10 @@ ORDER BY 1;
 
 WITH sales_data AS (
     SELECT
-        s.customer_id,
-        CONCAT(c.first_name, ' ', c.last_name) AS customer,
         s.sale_date,
         p.price,
+        s.customer_id,
+        CONCAT(c.first_name, ' ', c.last_name) AS customer,
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
         ROW_NUMBER()
             OVER (PARTITION BY s.customer_id ORDER BY s.sale_date)
@@ -121,7 +121,7 @@ WITH sales_data AS (
         ON s.customer_id = c.customer_id
     LEFT JOIN employees AS e
         ON s.sales_person_id = e.employee_id
-    ORDER BY 1
+
 )
 
 SELECT
@@ -129,4 +129,5 @@ SELECT
     sale_date,
     seller
 FROM sales_data
-WHERE row_n = 1 AND price = 0;
+WHERE row_n = 1 AND price = 0
+ORDER BY customer_id;
