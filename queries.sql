@@ -121,7 +121,7 @@ WITH sales_data AS (
         ON s.customer_id = c.customer_id
     LEFT JOIN employees AS e
         ON s.sales_person_id = e.employee_id
-
+    ORDER BY 3
 )
 
 SELECT
@@ -129,5 +129,4 @@ SELECT
     sale_date,
     seller
 FROM sales_data
-WHERE row_n = 1 AND price = 0
-ORDER BY customer_id;
+WHERE row_n = 1 AND price = 0;
